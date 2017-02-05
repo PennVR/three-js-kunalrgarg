@@ -10,7 +10,19 @@
 	</head>
 	<body>
 		<script src="three.js"></script>
+
+
+		<script src="js/controls/VRControls.js"></script>
+		<script src="js/effects/VREffect.js"></script>
+		<script src="js/vr/WebVR.js"></script>
+
 		<script>
+
+		if ( WEBVR.isAvailable() === false ) {
+
+				document.body.appendChild( WEBVR.getMessage() );
+
+			}
 			var scene = new THREE.Scene();
 			//TEST TEST
 			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
