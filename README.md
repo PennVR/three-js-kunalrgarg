@@ -5,7 +5,7 @@ Project Name: PennVR Three.js project
 GitHub Pages Site: https://github.com/kunalrgarg
 Techniques:
 
-Instructions: 
+Instructions: Open the index.html file in firefox nightly
 
 Motion Sickness:
 

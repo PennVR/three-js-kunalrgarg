@@ -1,58 +1,44 @@
+<!-- This project uses codes from threejs examples (https://threejs.org/), WebVR (https://webvr.info/), and mrdoob / http://mrdoob.com.  -->
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 	<head>
-		<meta charset=utf-8>
-		<title>My first three.js app</title>
+		<title>PennVR Head Gazer</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 		<style>
-			body { margin: 0; }
-			canvas { width: 100%; height: 100% }
+			body {
+				font-family: Monospace;
+				background-color: #101010;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+			a {
+				color: #f00;
+			}
 		</style>
 	</head>
 	<body>
-		<script src="three.js"></script>
 
-
+		<script src="js/threejs/three.min.js"></script>
+		<script src="js/controls/PointerLockControl.js"></script>
 		<script src="js/controls/VRControls.js"></script>
 		<script src="js/effects/VREffect.js"></script>
 		<script src="js/vr/WebVR.js"></script>
+		<script src="js/perlin/perlin.js"></script>
+		<script src="js/perlin/myperlin.js"></script>
 
-		<script>
+		<div id="blocker">
 
-		if ( WEBVR.isAvailable() === false ) {
+			<div id="instructions">
+				<span style="font-size:40px">Click to play</span>
+				<br />
+				MOUSE = Look around
+			</div>
 
-				document.body.appendChild( WEBVR.getMessage() );
-
-			}
-			var scene = new THREE.Scene();
-			//TEST TEST
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-
-			var renderer = new THREE.WebGLRenderer();
-			renderer.setSize( window.innerWidth, window.innerHeight );
-			document.body.appendChild( renderer.domElement );
-
-			var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-			var material = new THREE.MeshBasicMaterial( { color: 0x0fffff } );
-			var cube = new THREE.Mesh( geometry, material );
-			scene.add( cube );
-
-			camera.position.z = 5;
-			var col = 0;
-
-			var render = function () {
-				requestAnimationFrame( render );
-
-				cube.rotation.x += 0.05;
-				cube.rotation.y += 0.05;
-				cube.position.z += -0.1;
-				col += 5;
-				cube.material = new THREE.MeshBasicMaterial( {color: col})
-
-				renderer.render(scene, camera);
-				//TEST TEST
-			};
-
-			render();
+		</div>
+		<script src ="js/main.js">
 		</script>
 	</body>
 </html>
