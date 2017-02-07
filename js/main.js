@@ -10,6 +10,7 @@ var camera, scene, renderer;
 var geometry, material, mesh;
 var controls;
 var cubes = [];
+var fireworks = [];
 var raycaster;
 var blocker = document.getElementById( 'blocker' );
 var instructions = document.getElementById( 'instructions' );
@@ -103,6 +104,30 @@ function init() {
 	floor = new THREE.Mesh( geometry, material3 );
 	scene.add( floor );
 
+
+
+	// === LOOK: Setup spheres
+	geometry = new THREE.BoxGeometry( 20, 20, 20 );
+	
+	for ( var i = 0; i < 5; i ++ ) {
+			
+		var geometry = new THREE.SphereGeometry( 5, 32, 32 );
+		var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+		var sphere = new THREE.Mesh( geometry, material );
+		
+		
+		
+		sphere.position.x = Math.floor( Math.random() * 20 - 10 ) * 20;
+		//sphere.position.y = Math.floor( Math.random() * 20 ) * 20 + 10;
+		sphere.position.z = Math.floor( Math.random() * 20 - 10 ) * 20;
+
+
+		
+		scene.add( sphere );
+		fireworks.push( sphere );
+	}
+
+
 	
 	
 	// === LOOK: Setup cubes
@@ -115,6 +140,8 @@ function init() {
 		mesh.position.x = Math.floor( Math.random() * 20 - 10 ) * 20;
 		mesh.position.y = Math.floor( Math.random() * 20 ) * 20 + 10;
 		mesh.position.z = Math.floor( Math.random() * 20 - 10 ) * 20;
+
+
 		
 		//scene.add( mesh );
 		cubes.push( mesh );
@@ -134,6 +161,11 @@ function init() {
 
 function animate() {
 	requestAnimationFrame( animate );
+
+	// fireworks.forEach(function (v){
+	// 	v.position.y += 10;
+	// })
+
 
 	// TODO: Ray caster
 
