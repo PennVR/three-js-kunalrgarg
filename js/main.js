@@ -74,7 +74,7 @@ function init() {
 
 	// === Setup renderer
 	renderer = new THREE.WebGLRenderer();
-	renderer.setClearColor( 0xffffff );
+	renderer.setClearColor( 0x7ec0ee );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.body.appendChild( renderer.domElement );
