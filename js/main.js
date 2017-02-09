@@ -26,50 +26,6 @@ var clouds = [];
 var counter = 0;
 
 
-// // http://www.html5rocks.com/en/tutorials/pointerlock/intro/
-// var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
-// if ( havePointerLock ) {
-// 	var element = document.body;
-// 	var pointerlockchange = function ( event ) {
-// 		if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
-// 			controls.enabled = true;
-// 			blocker.style.display = 'none';
-// 		} else {
-// 			controls.enabled = false;
-// 			blocker.style.display = '-webkit-box';
-// 			blocker.style.display = '-moz-box';
-// 			blocker.style.display = 'box';
-// 			instructions.style.display = '';
-// 		}
-// 	};
-// 	var pointerlockerror = function ( event ) {
-// 		instructions.style.display = '';
-// 	};
-
-// 	// Hook pointer lock state change events
-// 	document.addEventListener( 'pointerlockchange', pointerlockchange, false );
-// 	document.addEventListener( 'mozpointerlockchange', pointerlockchange, false );
-// 	document.addEventListener( 'webkitpointerlockchange', pointerlockchange, false );
-// 	document.addEventListener( 'pointerlockerror', pointerlockerror, false );
-// 	document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
-// 	document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
-
-// 	instructions.style.display = 'none';
-	
-// 	// Ask the browser to lock the pointer
-// 	element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
-// 	element.requestPointerLock();
-
-// 	instructions.addEventListener( 'click', function ( event ) {
-// 		instructions.style.display = 'none';
-// 		// Ask the browser to lock the pointer
-// 		element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
-// 		element.requestPointerLock();
-// 	}, false );
-// } else {
-// 	instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
-// }
-
 init();
 animate();
 
@@ -136,23 +92,35 @@ function init() {
 	}
 
 	light.position.set( 0.5, 1, 0.75 );
-	
-	for ( var i = 0; i < 30; i ++ ) {
-		var geometry = new THREE.SphereGeometry( 3, 32, 32 );
-		var material = new THREE.MeshLambertMaterial( {color: 0xffff00} );
+
+
+	//setup clouds
+	for ( var i = 0; i < 50; i ++ ) {
+		var geometry = new THREE.SphereGeometry( 10, 32, 32 );
+		var material = new THREE.MeshPhongMaterial( {color: 0xffffff} );
 		var sphere = new THREE.Mesh( geometry, material );
 		sphere.position.x = Math.floor( Math.random() * 20 - 10 ) * 20;
 		sphere.position.z = Math.floor( Math.random() * 20 - 10 ) * 20;
 		sphere.position.y = 150;
 		scene.add( sphere );
-		fireworks.push( sphere );
+		clouds.push( sphere );
 	}
 
 	light.position.set( 0.5, 1, 0.75 );
 
 
-
-
+	//set up sun
+	var geometry = new THREE.SphereGeometry( 10, 32, 32 );
+	var material = new THREE.MeshLambertMaterial( {color: 0xffff00} );
+	var sun = new THREE.Mesh( geometry, material );
+	sun.position.x = 10;
+	sun.position.z = -1000;
+	sun.position.y = 100;
+	scene.add( sun );
+	//sunlight
+	var sunlight = new THREE.PointLight( 0xff0000, 100, 100 );
+	sunlight.position.set( 10, -990, 100 );
+	scene.add( sunlight );
 
 	controls = new THREE.VRControls( camera );
 	effect = new THREE.VREffect( renderer );
@@ -215,6 +183,10 @@ function animate() {
 			}
 			counter = 0;
 		}
+
+	clouds.forEach(function (v){
+		v.position.x += 0.05;
+	});
 
 	fireworks.forEach(function (v){
 		v.position.y += 3;
