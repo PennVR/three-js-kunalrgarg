@@ -1,9 +1,9 @@
 # three-js-kunalrgarg (Park Fireworks)
 
 # Information
-Name: Kunal Garg
-Project Name: Park Fireworks (PennVR Three.js project)
-GitHub Pages Site: https://pennvr.github.io/three-js-kunalrgarg/
+1. Name: Kunal Garg
+2. Project Name: Park Fireworks (PennVR Three.js project)
+3. GitHub Pages Site: https://pennvr.github.io/three-js-kunalrgarg/
 
 # Techniques: 
 Using perlin noise, I was able to generate a randomly elevated terrain. This smooth random surface allowed me to give the user an impression of being on a hilly surface. I used this technique because it is the most straightforward and commonly used noise function. I used basic geometry position moevement to manually move the fireworks every frame. I used this strategy as I did not know how to use force/velocity to move the fireworks.
