@@ -160,11 +160,11 @@ function animate() {
 	requestAnimationFrame( animate );
 	counter++;
 
-		if (counter === 100) {
-			for ( var i = 0; i < 10; i ++ ) {
+		if (counter === 200) {
+			for ( var i = 0; i < 5; i ++ ) {
 					
-				var geometry = new THREE.SphereGeometry( 1, 32, 32 );
-				var material = new THREE.MeshLambertMaterial( {color: 0xffff00} );
+				var geometry = new THREE.SphereGeometry( 0.5, 32, 32 );
+				var material = new THREE.MeshLambertMaterial( {color: 0xf5f5f5} );
 				var sphere = new THREE.Mesh( geometry, material );
 				
 				
@@ -177,6 +177,7 @@ function animate() {
 				scene.add( sphere );
 				fireworks.push( sphere );
 			}
+			counter = 0;
 		}
 
 	fireworks.forEach(function (v){
