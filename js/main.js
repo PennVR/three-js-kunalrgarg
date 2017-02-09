@@ -139,16 +139,6 @@ function init() {
 		fireworks.push( sphere );
 	}
 
-	//Test sphere for refrencing position
-	var geometry = new THREE.SphereGeometry( 5, 32, 32 );
-	var material = new THREE.MeshLambertMaterial( {color: 0x777788} );
-	var sphere = new THREE.Mesh( geometry, material );
-	sphere.position.z = 10;
-	sphere.position.x = 10;
-	sphere.position.y = 10;
-
-	scene.add(sphere);
-
 	light.position.set( 0.5, 1, 0.75 );
 
 
