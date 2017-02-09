@@ -20,6 +20,9 @@ var fireworkChildren2 = [];
 var fireworkChildren3 = [];
 var fireworkChildren4 = [];
 var fireworkChildren5 = [];
+var fireworkChildren6 = [];
+var fireworkChildren7 = [];
+var clouds = [];
 var counter = 0;
 
 
@@ -123,23 +126,32 @@ function init() {
 	geometry = new THREE.BoxGeometry( 20, 20, 20 );
 	
 	for ( var i = 0; i < 10; i ++ ) {
-			
 		var geometry = new THREE.SphereGeometry( 1, 32, 32 );
 		var material = new THREE.MeshLambertMaterial( {color: 0xffff00} );
 		var sphere = new THREE.Mesh( geometry, material );
-		
-		
-		
 		sphere.position.x = Math.floor( Math.random() * 20 - 10 ) * 20;
 		sphere.position.z = Math.floor( Math.random() * 20 - 10 ) * 20;
-
-
-		
 		scene.add( sphere );
 		fireworks.push( sphere );
 	}
 
 	light.position.set( 0.5, 1, 0.75 );
+	
+	for ( var i = 0; i < 30; i ++ ) {
+		var geometry = new THREE.SphereGeometry( 3, 32, 32 );
+		var material = new THREE.MeshLambertMaterial( {color: 0xffff00} );
+		var sphere = new THREE.Mesh( geometry, material );
+		sphere.position.x = Math.floor( Math.random() * 20 - 10 ) * 20;
+		sphere.position.z = Math.floor( Math.random() * 20 - 10 ) * 20;
+		sphere.position.y = 150;
+		scene.add( sphere );
+		fireworks.push( sphere );
+	}
+
+	light.position.set( 0.5, 1, 0.75 );
+
+
+
 
 
 	controls = new THREE.VRControls( camera );
@@ -205,7 +217,7 @@ function animate() {
 		}
 
 	fireworks.forEach(function (v){
-		v.position.y += 0.5;
+		v.position.y += 3;
 		if (v.position.y >= 100){
 			var exploded = fireworks.splice(fireworks.indexOf(v), 1);
 			scene.remove(v);
@@ -256,6 +268,20 @@ function animate() {
 			sphere5.position.z = v.position.z;
 			scene.add(sphere5);
 			fireworkChildren5.push(sphere5);
+
+			var sphere6 = new THREE.Mesh( geometry, material );
+			sphere6.position.x = v.position.x;
+			sphere6.position.y = v.position.y;
+			sphere6.position.z = v.position.z + 3;
+			scene.add(sphere6);
+			fireworkChildren6.push(sphere6);
+
+			var sphere7 = new THREE.Mesh( geometry, material );
+			sphere7.position.x = v.position.x;
+			sphere7.position.y = v.position.y;
+			sphere7.position.z = v.position.z - 3;
+			scene.add(sphere7);
+			fireworkChildren7.push(sphere7);
 		}
 	});
 
@@ -333,6 +359,32 @@ function animate() {
 			else {
 				scene.remove(v);
 				fireworkChildren5.splice(fireworkChildren5.indexOf(v), 1);
+			}
+		})
+	}
+
+	if (fireworkChildren6.length > 0){
+		fireworkChildren6.forEach(function (v){
+			if (v.position.y >= 50){
+				v.position.y -= 0.5;
+				v.position.z += 0.5;
+			}
+			else {
+				scene.remove(v);
+				fireworkChildren6.splice(fireworkChildren6.indexOf(v), 1);
+			}
+		})
+	}
+
+	if (fireworkChildren7.length > 0){
+		fireworkChildren7.forEach(function (v){
+			if (v.position.y >= 50){
+				v.position.y -= 0.5;
+				v.position.z -= 0.5;
+			}
+			else {
+				scene.remove(v);
+				fireworkChildren7.splice(fireworkChildren7.indexOf(v), 1);
 			}
 		})
 	}
