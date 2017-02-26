@@ -5,6 +5,7 @@ if ( WEBVR.isAvailable() === false ) {
 }
 
 var floor;
+var river;
 var grass;
 var camera, scene, renderer;
 var geometry, material, mesh;
@@ -77,6 +78,13 @@ function init() {
 	var material2 = new THREE.MeshPhongMaterial();
 	floor = new THREE.Mesh( geometry, material3 );
 	scene.add( floor );
+
+	//river
+	geometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
+	var texture = new THREE.TextureLoader().load("js/images/water.jpg");
+	var waterMaterial = new THREE.MeshLambertMaterial( {color: 0xffffff, map: texture});
+	river = new THREE.Mesh(geometry, waterMaterial);
+	scene.add( river );
 
 	// === LOOK: Setup spheres
 	geometry = new THREE.BoxGeometry( 20, 20, 20 );
