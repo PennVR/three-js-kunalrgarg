@@ -4,6 +4,7 @@ if ( WEBVR.isAvailable() === false ) {
 
 }
 
+
 var floor;
 var river;
 var grass;
@@ -25,12 +26,16 @@ var fireworkChildren6 = [];
 var fireworkChildren7 = [];
 var clouds = [];
 var counter = 0;
+var date = Date();
+var riverTop = false;
 
 
 init();
 animate();
 
 function init() {
+
+
 
 	// === Setup renderer
 	renderer = new THREE.WebGLRenderer();
@@ -58,7 +63,7 @@ function init() {
 	// === TODO: Create ray caster
 	
 	// === LOOK: Setup floor
-	geometry = new THREE.PlaneGeometry( 2000, 2000, 300, 300 );
+	geometry = new THREE.PlaneGeometry( 2000, 2000, 30, 30 );
 	geometry.rotateX( - Math.PI / 2 );
 
 	//noise.seed(Math.random());
@@ -68,7 +73,7 @@ function init() {
 
 	var n = new Myperlin();
 	geometry.vertices.forEach(function (v){
-		v.y = (n.perlin(v.x/100 , v.y/100, v.z/100)) * 100 - 100;
+		v.y = (n.perlin(v.x/100 , v.y/100, v.z/100)) * 130 - 100;
 	});
 
 	var texture = new THREE.TextureLoader().load( "js/images/green.jpg" );
@@ -82,8 +87,15 @@ function init() {
 	//river
 	geometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
 	var texture = new THREE.TextureLoader().load("js/images/water.jpg");
+	geometry.rotateX( - Math.PI / 2 );
+
+	
 	var waterMaterial = new THREE.MeshLambertMaterial( {color: 0xffffff, map: texture});
 	river = new THREE.Mesh(geometry, waterMaterial);
+	geometry.vertices.forEach(function (v){
+		v.y -= 35;
+	});
+
 	scene.add( river );
 
 	// === LOOK: Setup spheres
@@ -195,6 +207,30 @@ function animate() {
 	clouds.forEach(function (v){
 		v.position.x += 0.05;
 	});
+
+	var date = new Date();
+
+	if (date.getMilliseconds() == 999 || date.getMilliseconds() == 0){
+		riverTop = !riverTop;
+	}
+
+	if (riverTop == false) {
+		river.scale.y = (999 - date.getMilliseconds()) / 1000 + 0.2;
+	}
+	else {
+		river.scale.y = date.getMilliseconds() / 1000 + 0.2;
+	}
+
+	// //river
+	// if (date.getSeconds() % 2 == 1){
+	// 	river.scale.y = 0.5; 
+	// }
+	// if (date.getSeconds() % 2 == 0){
+	// 	river.scale.y = 0.4; 
+	// }
+	// if 
+
+
 
 	fireworks.forEach(function (v){
 		v.position.y += 3;
