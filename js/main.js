@@ -216,6 +216,7 @@ function animate() {
 
 	if (riverTop == false) {
 		river.scale.y = (999 - date.getMilliseconds()) / 1000 + 0.2;
+		river.
 	}
 	else {
 		river.scale.y = date.getMilliseconds() / 1000 + 0.2;
