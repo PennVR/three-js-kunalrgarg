@@ -58,7 +58,7 @@ function init() {
 	// === TODO: Create ray caster
 	
 	// === LOOK: Setup floor
-	geometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
+	geometry = new THREE.PlaneGeometry( 2000, 2000, 300, 300 );
 	geometry.rotateX( - Math.PI / 2 );
 
 	//noise.seed(Math.random());
@@ -68,10 +68,10 @@ function init() {
 
 	var n = new Myperlin();
 	geometry.vertices.forEach(function (v){
-		v.y = (n.perlin(v.x /100, v.y/100, v.z/100)) * 100 - 100;
+		v.y = (n.perlin(v.x/100 , v.y/100, v.z/100)) * 100 - 100;
 	});
 
-	var texture = new THREE.TextureLoader().load( "js/images/grass.jpg" );
+	var texture = new THREE.TextureLoader().load( "js/images/green.jpg" );
   	var material3 = new THREE.MeshLambertMaterial( { color: 0xffffff, map: texture } );
 
 	material = new THREE.MeshLambertMaterial( { color: 0x228B22 } );
