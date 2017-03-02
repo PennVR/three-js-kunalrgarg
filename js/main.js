@@ -28,14 +28,13 @@ var clouds = [];
 var counter = 0;
 var date = Date();
 var riverTop = false;
+var sky;
 
 
 init();
 animate();
 
 function init() {
-
-
 
 	// === Setup renderer
 	renderer = new THREE.WebGLRenderer();
@@ -83,6 +82,58 @@ function init() {
 	var material2 = new THREE.MeshPhongMaterial();
 	floor = new THREE.Mesh( geometry, material3 );
 	scene.add( floor );
+
+
+		//skybox
+	  
+	 var imagePrefix = "js/images/desertsky_";
+	 var directions  = ["bk", "dn", "ft", "lf", "rt", "up"];
+	 var imageSuffix = ".tga";
+	   
+	 // var materialArray = [];
+	 // for (var i = 0; i < 6; i++)
+	 //  materialArray.push( new THREE.MeshBasicMaterial({
+	 //   map: THREE.TextureLoader().load( imagePrefix + directions[i] + imageSuffix ),
+	 //   side: THREE.BackSide
+	 //  }));
+
+	var materialArray = [];
+	materialArray.push( new THREE.MeshBasicMaterial({ 
+		map : new THREE.TextureLoader().load("js/images/desertsky_bk.tga"), 
+	    side: THREE.BackSide
+	 }));
+
+	 materialArray.push( new THREE.MeshBasicMaterial({ 
+		map : new THREE.TextureLoader().load("js/images/desertsky_dn.tga"), 
+	    side: THREE.BackSide
+	 }));
+
+	 materialArray.push( new THREE.MeshBasicMaterial({ 
+		map : new THREE.TextureLoader().load("js/images/desertsky_ft.tga"), 
+	    side: THREE.BackSide
+	 }));
+
+	 materialArray.push( new THREE.MeshBasicMaterial({ 
+		map : new THREE.TextureLoader().load("js/images/desertsky_lf.tga"), 
+	    side: THREE.BackSide
+	 }));
+
+	 materialArray.push( new THREE.MeshBasicMaterial({ 
+		map : new THREE.TextureLoader().load("js/images/desertsky_rt.tga"), 
+	    side: THREE.BackSide
+	 }));
+
+	 materialArray.push( new THREE.MeshBasicMaterial({ 
+		map : new THREE.TextureLoader().load("js/images/desertsky_up.tga"), 
+	    side: THREE.BackSide
+	 }));
+	  
+	 var skyGeometry = new THREE.CubeGeometry( 500, 500, 500 );
+	 var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
+	 var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
+	 skyBox.rotation.x += Math.PI / 2;
+	 scene.add( skyBox );
+
 
 	//river
 	geometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
@@ -210,13 +261,13 @@ function animate() {
 
 	var date = new Date();
 
-	if (date.getMilliseconds() == 999 || date.getMilliseconds() == 0){
+	if (date.getMilliseconds() == 999 || date.getMilliseconds() == 0 || date.getMilliseconds() == 1 ||
+		date.getMilliseconds() == 2 || date.getMilliseconds() == 998 || date.getMilliseconds() == 997){
 		riverTop = !riverTop;
 	}
 
 	if (riverTop == false) {
 		river.scale.y = (999 - date.getMilliseconds()) / 1000 + 0.2;
-		river.
 	}
 	else {
 		river.scale.y = date.getMilliseconds() / 1000 + 0.2;
