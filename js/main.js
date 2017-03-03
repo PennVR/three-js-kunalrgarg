@@ -103,54 +103,59 @@ function init() {
 
 	var materialArray = [];
 	materialArray.push( new THREE.MeshBasicMaterial({ 
-		map : new THREE.TextureLoader().load("js/images/sky/sky3_UP.jpg"), 
+		map : new THREE.TextureLoader().load("js/images/skyS.jpg"), 
 	    side: THREE.BackSide
 	 }));
 
 	 materialArray.push( new THREE.MeshBasicMaterial({ 
-		map : new THREE.TextureLoader().load("js/images/sky/sky3_RT.jpg"), 
+		map : new THREE.TextureLoader().load("js/images/skyS.jpg"), 
 	    side: THREE.BackSide
 	 }));
 
 	 materialArray.push( new THREE.MeshBasicMaterial({ 
-		map : new THREE.TextureLoader().load("js/images/sky/sky3_LF.jpg"), 
+		map : new THREE.TextureLoader().load("js/images/skyS.jpg"), 
 	    side: THREE.BackSide
 	 }));
 
 	 materialArray.push( new THREE.MeshBasicMaterial({ 
-		map : new THREE.TextureLoader().load("js/images/sky/sky3_FT.jpg"), 
+		map : new THREE.TextureLoader().load("js/images/skyS.jpg"), 
 	    side: THREE.BackSide
 	 }));
 
 	 materialArray.push( new THREE.MeshBasicMaterial({ 
-		map : new THREE.TextureLoader().load("js/images/sky/sky3_DN.jpg"), 
+		map : new THREE.TextureLoader().load("js/images/skyS.jpg"), 
 	    side: THREE.BackSide
 	 }));
 
 	 materialArray.push( new THREE.MeshBasicMaterial({ 
-		map : new THREE.TextureLoader().load("js/images/sky/sky3_BK.jpg"), 
+		map : new THREE.TextureLoader().load("js/images/skyS.jpg"), 
 	    side: THREE.BackSide
 	 }));
 	  
-	 var skyGeometry = new THREE.CubeGeometry( 500, 500, 500 );
+	 var skyGeometry = new THREE.CubeGeometry( 1000, 1000, 1000 );
 	 var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
 	 var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
-	 skyBox.rotation.x += Math.PI / 2;
 	 scene.add( skyBox );
 
 
 	//river
-	river_geometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
+	river_geometry = new THREE.PlaneGeometry(1000, 1000, 25, 25);
 	river_texture = new THREE.TextureLoader().load("js/images/water.jpg");
 	river_geometry.rotateX( - Math.PI / 2 );
+
+
+
+	var n = new Myperlin();
+	river_geometry.vertices.forEach(function (v){
+		v.y = (n.perlin(v.x/100 , v.y/100, v.z/100)) * 130 - 120;
+	});
+
 
 	
 	river_material = new THREE.MeshLambertMaterial( {color: 0xffffff, map: river_texture});
 	river = new THREE.Mesh(river_geometry, river_material);
-	river_geometry.vertices.forEach(function (v){
-		v.y -= 35;
-	});
 
+	river.scale.y = 0.2;
 	scene.add( river );
 
 	// //river
@@ -305,13 +310,13 @@ function animate() {
 		riverTop = !riverTop;
 	}
 
-	if (riverTop == false) {
-
+	if (!riverTop) {
 		river.scale.y = (60 - date.getSeconds()) / 60 + 0.2;
 	}
 	else {
 		river.scale.y = date.getSeconds() / 60 + 0.2;
 	}
+
 
 	// geometry.vertices.forEach(function (v){
 	// 	v.y -= 35;
