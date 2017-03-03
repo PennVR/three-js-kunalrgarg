@@ -30,6 +30,10 @@ var date = Date();
 var riverTop = false;
 var sky;
 
+var river_geometry;
+var river_material;
+var river_texture;
+
 
 init();
 animate();
@@ -86,9 +90,9 @@ function init() {
 
 		//skybox
 	  
-	 var imagePrefix = "js/images/desertsky_";
-	 var directions  = ["bk", "dn", "ft", "lf", "rt", "up"];
-	 var imageSuffix = ".tga";
+	 var imagePrefix = "js/images/sky/sky3";
+	 var directions  = ["BK", "dn", "ft", "lf", "rt", "up"];
+	 var imageSuffix = ".jpg";
 	   
 	 // var materialArray = [];
 	 // for (var i = 0; i < 6; i++)
@@ -99,32 +103,32 @@ function init() {
 
 	var materialArray = [];
 	materialArray.push( new THREE.MeshBasicMaterial({ 
-		map : new THREE.TextureLoader().load("js/images/desertsky_bk.tga"), 
+		map : new THREE.TextureLoader().load("js/images/sky/sky3_UP.jpg"), 
 	    side: THREE.BackSide
 	 }));
 
 	 materialArray.push( new THREE.MeshBasicMaterial({ 
-		map : new THREE.TextureLoader().load("js/images/desertsky_dn.tga"), 
+		map : new THREE.TextureLoader().load("js/images/sky/sky3_RT.jpg"), 
 	    side: THREE.BackSide
 	 }));
 
 	 materialArray.push( new THREE.MeshBasicMaterial({ 
-		map : new THREE.TextureLoader().load("js/images/desertsky_ft.tga"), 
+		map : new THREE.TextureLoader().load("js/images/sky/sky3_LF.jpg"), 
 	    side: THREE.BackSide
 	 }));
 
 	 materialArray.push( new THREE.MeshBasicMaterial({ 
-		map : new THREE.TextureLoader().load("js/images/desertsky_lf.tga"), 
+		map : new THREE.TextureLoader().load("js/images/sky/sky3_FT.jpg"), 
 	    side: THREE.BackSide
 	 }));
 
 	 materialArray.push( new THREE.MeshBasicMaterial({ 
-		map : new THREE.TextureLoader().load("js/images/desertsky_rt.tga"), 
+		map : new THREE.TextureLoader().load("js/images/sky/sky3_DN.jpg"), 
 	    side: THREE.BackSide
 	 }));
 
 	 materialArray.push( new THREE.MeshBasicMaterial({ 
-		map : new THREE.TextureLoader().load("js/images/desertsky_up.tga"), 
+		map : new THREE.TextureLoader().load("js/images/sky/sky3_BK.jpg"), 
 	    side: THREE.BackSide
 	 }));
 	  
@@ -136,18 +140,32 @@ function init() {
 
 
 	//river
-	geometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
-	var texture = new THREE.TextureLoader().load("js/images/water.jpg");
-	geometry.rotateX( - Math.PI / 2 );
+	river_geometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
+	river_texture = new THREE.TextureLoader().load("js/images/water.jpg");
+	river_geometry.rotateX( - Math.PI / 2 );
 
 	
-	var waterMaterial = new THREE.MeshLambertMaterial( {color: 0xffffff, map: texture});
-	river = new THREE.Mesh(geometry, waterMaterial);
-	geometry.vertices.forEach(function (v){
+	river_material = new THREE.MeshLambertMaterial( {color: 0xffffff, map: river_texture});
+	river = new THREE.Mesh(river_geometry, river_material);
+	river_geometry.vertices.forEach(function (v){
 		v.y -= 35;
 	});
 
 	scene.add( river );
+
+	// //river
+	// geometry = new THREE.PlaneGeometry(2000, 2000, 100, 100);
+	// var texture = new THREE.TextureLoader().load("js/images/water.jpg");
+	// geometry.rotateX( - Math.PI / 2 );
+
+	
+	// var waterMaterial = new THREE.MeshLambertMaterial( {color: 0xffffff, map: texture});
+	// river = new THREE.Mesh(geometry, waterMaterial);
+	// geometry.vertices.forEach(function (v){
+	// 	v.y -= 35;
+	// });
+
+	// scene.add( river );
 
 	// === LOOK: Setup spheres
 	geometry = new THREE.BoxGeometry( 20, 20, 20 );
@@ -259,28 +277,47 @@ function animate() {
 		v.position.x += 0.05;
 	});
 
+
+	// scene.remove(river);
+
+	// var date = new Date();
+
+	// //river
+	// river_geometry = new THREE.PlaneGeometry(river.scale.y = date.getMilliseconds() / 1000 + 0.2, river.scale.y = date.getMilliseconds() / 1000 + 0.2, 100, 100)
+	// river_texture = new THREE.TextureLoader().load("js/images/water.jpg");
+	// river_geometry.rotateX( - Math.PI / 2 );
+
+	// var n = new Myperlin();
+	// river_geometry.vertices.forEach(function (v){
+	// 	v.y = (n.perlin(v.x/100 , v.y/100, v.z/100)) * 130 - 100;
+	// });
+
+
+	
+	// river_material = new THREE.MeshLambertMaterial( {color: 0xffffff, map: river_texture});
+	// river = new THREE.Mesh(river_geometry, river_material);
+
+	// scene.add( river );
+
 	var date = new Date();
 
-	if (date.getMilliseconds() == 999 || date.getMilliseconds() == 0 || date.getMilliseconds() == 1 ||
-		date.getMilliseconds() == 2 || date.getMilliseconds() == 998 || date.getMilliseconds() == 997){
+	if (date.getSeconds() == 0){
 		riverTop = !riverTop;
 	}
 
 	if (riverTop == false) {
-		river.scale.y = (999 - date.getMilliseconds()) / 1000 + 0.2;
+
+		river.scale.y = (60 - date.getSeconds()) / 60 + 0.2;
 	}
 	else {
-		river.scale.y = date.getMilliseconds() / 1000 + 0.2;
+		river.scale.y = date.getSeconds() / 60 + 0.2;
 	}
 
-	// //river
-	// if (date.getSeconds() % 2 == 1){
-	// 	river.scale.y = 0.5; 
-	// }
-	// if (date.getSeconds() % 2 == 0){
-	// 	river.scale.y = 0.4; 
-	// }
-	// if 
+	// geometry.vertices.forEach(function (v){
+	// 	v.y -= 35;
+	// });
+
+	// scene.add( river );
 
 
 
